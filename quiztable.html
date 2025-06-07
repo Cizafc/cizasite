@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
+        th, td { border: 1px solid #ccc; padding: 0.5em; text-align: left; color: black;}
+        th { background: yellow; }
+        .score { font-weight: bold; }
+        .hidden { display: none; }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>General Knowledge Quiz</h1>
+        <p>Answer the questions below and submit to see your score!</p>
+    </header>
+    <main>
+        <form id="quizForm">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Question</th>
+                        <th>Your Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>What is the capital of France?</td>
+                        <td>
+                            <input type="text" name="q1" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Which planet is known as the Red Planet?</td>
+                        <td>
+                            <select name="q2" required>
+                                <option value="">Select</option>
+                                <option value="Mars">Mars</option>
+                                <option value="Venus">Venus</option>
+                                <option value="Jupiter">Jupiter</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>2 + 2 = ?</td>
+                        <td>
+                            <input type="radio" name="q3" value="3" required> 3
+                            <input type="radio" name="q3" value="4"> 4
+                            <input type="radio" name="q3" value="5"> 5
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>4</td>
+                        <td>What is the capital of kogi state?</td>
+                        <td>
+                            <input type="text" name="q4" required>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>5</td>
+                        <td>5 + 9 = ?</td>
+                        <td>
+                            <input type="radio" name="q5" value="12" required> 12
+                            <input type="radio" name="q5" value="13"> 13
+                            <input type="radio" name="q5" value="14"> 14
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit">Submit Quiz</button>
+        </form>
+        <section id="resultSection" class="hidden">
+            <h2>Your Score</h2>
+            <table>
+                <tr>
+                    <th>Total Questions</th>
+                    <td id="totalQuestions"></td>
+                </tr>
+                <tr>
+                    <th>Correct Answers</th>
+                    <td id="correctAnswers"></td>
+                </tr>
+                <tr>
+                    <th>Score</th>
+                    <td class="score" id="score"></td>
+                </tr>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <small>&copy; 2024 Quiz App</small>
+    </footer>
+    <script>
+        const answers = {
+            q1: "Paris",
+            q2: "Mars",
+            q3: "4",
+            q4: "lokoja",
+            q5: "14"
+        };
+
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let form = e.target;
+            let correct = 0;
+            let total = Object.keys(answers).length;
+
+            if (form.q1.value.trim().toLowerCase() === answers.q1.toLowerCase()) correct++;
+            if (form.q2.value === answers.q2) correct++;
+            if (form.q3.value === answers.q3) correct++;
+            if (form.q4.value.trim().toLowerCase() === answers.q4.toLowerCase()) correct++;
+            if (form.q5.value === answers.q5) correct++;
+
+            document.getElementById('totalQuestions').textContent = total;
+            document.getElementById('correctAnswers').textContent = correct;
+            document.getElementById('score').textContent = `${Math.round((correct/total)*100)}%`;
+
+            document.getElementById('resultSection').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
